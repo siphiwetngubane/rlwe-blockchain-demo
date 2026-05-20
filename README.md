@@ -264,19 +264,6 @@ On-chain verification gas cost is approximately **309,500 units** and
 is constant across Merkle tree depths, a direct consequence of Groth16
 succinctness.
 
-## Troubleshooting
-
-| Symptom | Likely cause | Fix |
-|---------|--------------|-----|
-| Wallet says "wrong network" | Not on Sepolia | Switch network to Sepolia (Chain ID `11155111`) |
-| Transaction reverts with `InvalidRoot` | Merkle root not anchored | Ask an `ADMIN_ROLE` holder to call `anchorMerkleRoot` for `0x...9cc34896` |
-| Transaction reverts with `NullifierUsed` | Same proof already submitted | Generate a new proof with a fresh nonce |
-| Transaction reverts with `Paused` | Contract is in emergency pause | Wait for a `PAUSER_ROLE` holder to call `unpause` |
-| `processBatch` reverts with `AccessControl` error | Caller lacks `VERIFIER_ROLE` | The admin must grant the role with `grantRole(VERIFIER_ROLE, addr)` |
-| Verifier returns `false` for a valid-looking proof | `Groth16Verifier.sol` does not match the zkey | Regenerate the verifier with `snarkjs zkey export solidityverifier` and redeploy |
-| `forge build` fails | Missing OpenZeppelin dependency | Run `forge install` from `web3/` |
-| Frontend cannot read proof files | Wrong path or stale build | Confirm `proof.json` and `public.json` paths match what the client expects, then rebuild |
-
 ## Notes
 
 - This is a **research prototype** using deliberately small RLWE
