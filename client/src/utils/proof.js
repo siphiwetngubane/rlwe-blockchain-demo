@@ -27,39 +27,6 @@ export function buildProofCalldata(proofJson, publicSignals) {
   }
 }
 
-/**
- * Derive the on-chain nullifier from pubSignals, the sender address, and the
- * sender's current nonce.
- *
- * Mirrors _deriveNullifier() in the contract (v2):
- *   keccak256(abi.encodePacked(pubSignals, sender, nonce))
- *
- * WHY the extra params:
- *   The Groth16 circuit always produces the same pubSignals for a given
- *   witness, so hashing pubSignals alone gives the same nullifier every time.
- *   Salting with (sender, nonce) makes each submission unique:
- *     - sender  → ties the nullifier to a specific wallet
- *     - nonce   → increments after every successful submitTransaction call,
- *                 so the next call produces a completely different nullifier
- *                 even with the same proof.json / public.json files.
- *
- * USAGE — always read the current nonce from the contract BEFORE calling this:
- *
- *   const currentNonce = await contract.nonces(account)          // BigInt
- *   const nullifier    = deriveNullifier(publicJson, account, currentNonce)
- *
- * For batch entries, use (baseNonce + entryIndex) for each slot:
- *
- *   const baseNonce = await contract.nonces(verifierAccount)
- *   entries.forEach((e, i) => {
- *     e.nullifier = deriveNullifier(e.publicJson, verifierAccount, baseNonce + BigInt(i))
- *   })
- *
- * @param {string[]}       pubSignals - Array of 15 signal strings from public.json
- * @param {string}         sender     - Ethereum address (checksummed or lowercase)
- * @param {bigint|number}  nonce      - Current value of nonces(sender) on-chain
- * @returns {string}  0x-prefixed bytes32 hex nullifier
- */
 export function deriveNullifier(pubSignals, sender, nonce) {
   return ethers.solidityPackedKeccak256(
     [
