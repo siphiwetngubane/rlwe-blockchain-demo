@@ -31,7 +31,7 @@ export function useQuantumSpectra({ signer, provider, account }) {
   const readContract  = useContract(QUANTUM_SPECTRA_ADDRESS, QUANTUM_SPECTRA_ABI, provider)
   const writeContract = useContract(QUANTUM_SPECTRA_ADDRESS, QUANTUM_SPECTRA_ABI, signer)
 
-  // ── Fetch global stats ──────────────────────────────────────────────────────
+
   const fetchStats = useCallback(async () => {
     if (!readContract) return
     try {
@@ -73,7 +73,7 @@ export function useQuantumSpectra({ signer, provider, account }) {
   useEffect(() => { fetchStats() }, [fetchStats])
   useEffect(() => { fetchRoles() }, [fetchRoles])
 
-  // ── Helpers ─────────────────────────────────────────────────────────────────
+  
   const clear = () => { setError(null); setTxHash(null) }
 
   async function send(fn, ...args) {
@@ -172,7 +172,6 @@ export function useQuantumSpectra({ signer, provider, account }) {
     [readContract]
   )
 
-  // FIXED: Return the contract object so SubmitTransaction can access nonces()
   return {
     stats,
     isPaused,
@@ -181,7 +180,7 @@ export function useQuantumSpectra({ signer, provider, account }) {
     loading,
     txHash,
     error,
-    // FIXED: Added contract property - using writeContract as it has signer capabilities
+    
     contract: writeContract,
     // actions
     submitTransaction,
