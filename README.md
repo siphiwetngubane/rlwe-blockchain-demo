@@ -22,7 +22,7 @@ The contract is deployed on the **Sepolia** Ethereum testnet
 | Component | Value |
 |-----------|-------|
 | **Network** | Sepolia testnet (Chain ID `11155111`) |
-| **Contract Address** | [`0x90D55080e24d06D3c368a015136b8F22B93164a0`](https://sepolia.etherscan.io/address/0x90D55080e24d06D3c368a015136b8F22B93164a0) |
+| **Contract Address** | [`0xc5aF2d1d6510E5697e4F235EC1Eb24c6fB5EE8D6`](https://sepolia.etherscan.io/address/0xc5aF2d1d6510E5697e4F235EC1Eb24c6fB5EE8D6) |
 | **Anchored Merkle Root** | `0x000000000000000000000000000000000000000000000000000000009cc34896` |
 | **Source circuit** | `DEXP01_Baseline_n4_d1` (n = 4, depth = 1) |
 | **Groth16 Verifier** | Generated from `DEXP01_Baseline_n4_d1` via `snarkjs zkey export solidityverifier` |
